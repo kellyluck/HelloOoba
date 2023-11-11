@@ -4,9 +4,6 @@ using System.Text.Json.Serialization;
 
 namespace OpenAI
 {
-    //string jsonBody = "{\"messages\": [{\"role\":\"user\", \"content\":\"" + payload + "\"}]," +
-    //            "\"model\": \"lmsys_vicuna-7b-v1.5\"," +
-    //            "\"frequency_penalty\": 0,\"logit_bias\":{},  \"max_tokens\":999,  \"n\": 1 }";
     public class OpenAIRequest
     {
         public OpenAIRequest(string model, string prompt, int maxTokens, string role = "user")
@@ -15,7 +12,6 @@ namespace OpenAI
             Messages = new List<MessageStuff>();
             Messages.Add(new MessageStuff() { Role = role, Content = prompt });
             Model = model;
-
         }
 
         [JsonPropertyName("messages")]
@@ -27,8 +23,8 @@ namespace OpenAI
         [JsonPropertyName("max_tokens")]
         public int MaxTokens { get; set; } = 99;
 
-        //[JsonPropertyName("temperature")]
-        //public decimal Temperature { get; set; } = 1.0M;
+        [JsonPropertyName("temperature")]
+        public decimal Temperature { get; set; } = 1.0M;
 
     }
 
@@ -67,14 +63,6 @@ namespace OpenAI
         [JsonPropertyName("message")]
         public MessageStuff Message { get; set; }
     }
-
-    //public class RequestMessageStuff
-    //{
-    //    [JsonPropertyName("role")]
-    //    public string Role { get; set; }
-    //    [JsonPropertyName("content")]
-    //    public string Content { get; set; }
-    //}
 
     public class MessageStuff
     {
