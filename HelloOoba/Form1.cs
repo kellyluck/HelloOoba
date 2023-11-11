@@ -19,7 +19,7 @@ namespace HelloOoba
 
         private string CallOpenAI(string payload)
         {
-            //string API_KEY = "";
+            //string API_KEY = ""; // add this if you need authenticaiton
             //string YOUR_RESOURCE_NAME = "";
             //string DEPLOYMENT_ID = "";
             //string API_VERSION = "2022-12-01";
@@ -38,12 +38,12 @@ namespace HelloOoba
             {
                 RestResponse<OpenAIResponse> response = client.Execute<OpenAIResponse>(request);
                 OpenAIResponse openAIResponse = JsonSerializer.Deserialize<OpenAIResponse>(response.Content);
-                Console.WriteLine(openAIResponse.Choices[0].Message.Content);
+                //Console.WriteLine(openAIResponse.Choices[0].Message.Content);
                 return openAIResponse.Choices[0].Message.Content;
             } catch ( Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return "";
+                return "ERROR: " + ex.Message;
             }
 
             
