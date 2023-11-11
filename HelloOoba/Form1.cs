@@ -1,15 +1,15 @@
 ﻿using RestSharp;
 using System;
 using System.Windows.Forms;
-using FentonOpenAI;
 using System.Text.Json;
+using OpenAI;
 
 namespace HelloOoba
 {
     public partial class Form1 : Form
     {
         private const string baseUrl = "http://127.0.0.1:5000/v1/chat/completions";
-        RestClient client = new RestClient(baseUrl);
+        readonly RestClient client = new RestClient(baseUrl);
 
         public Form1()
         {
@@ -29,10 +29,11 @@ namespace HelloOoba
 
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
-            string jsonBody = "{\"messages\": [{\"role\":\"user\", \"content\":\"" + payload + "\"}]," +
-                "\"model\": \"lmsys_vicuna-7b-v1.5\"," +
-                "\"frequency_penalty\": 0,\"logit_bias\":{},  \"max_tokens\":999,  \"n\": 1 }";
-            request.AddJsonBody(jsonBody);
+
+            OpenAIRequest requestObject = new OpenAIRequest("lmsys_vicuna-7b-v1.5", payload, 999);
+            string requestBody = JsonSerializer.Serialize(requestObject);
+            request.AddJsonBody(requestBody);
+
             try
             {
                 RestResponse<OpenAIResponse> response = client.Execute<OpenAIResponse>(request);
